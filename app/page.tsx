@@ -16,12 +16,12 @@ export default function Home() {
             um<i>edu</i>
           </h1>
           <p className="text-muted-foreground font-medium text-center">
-            open-source, anonymous, encrypted, private <i>edu</i> forums
+            USLS College of Computing Studies Edition
           </p>
 
           <Button asChild className="mt-4" variant="outline">
             <Link href="/login">
-              Access your private forum <MessageSquareTextIcon />
+              Access the private forum <MessageSquareTextIcon />
             </Link>
           </Button>
 
@@ -36,20 +36,14 @@ export default function Home() {
             <HighlightText>
               <Link
                 className="hover:text-primary transition-all"
-                href="https://github.com/joshxfi/umedu"
+                href="https://github.com/joshxfi/umedu-ccs"
                 target="_blank"
               >
                 open-source
               </Link>
             </HighlightText>
-            platform for students to connect with their peers based on their{" "}
-            <HighlightText>
-              <Link className="hover:text-primary transition-all" href="/login">
-                .edu
-              </Link>
-            </HighlightText>
-            email. No personal information is stored, ensuring your privacy is
-            protected.{" "}
+            platform for students to connect with their peers. No personal
+            information is stored, ensuring your privacy is protected.{" "}
             <Link href="/about" className="text-white">
               Learn more &rarr;
             </Link>

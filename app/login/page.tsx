@@ -3,7 +3,6 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import {
   LogInIcon,
-  SchoolIcon,
   ShieldIcon,
   InfoIcon,
   AlertTriangleIcon,
@@ -51,7 +50,7 @@ export default async function Login({ searchParams }: Props) {
                 Welcome to Umedu
               </CardTitle>
               <CardDescription>
-                Connect with your academic community
+                USLS College of Computing Studies Edition
               </CardDescription>
             </CardHeader>
 
@@ -65,7 +64,7 @@ export default async function Login({ searchParams }: Props) {
                   <AlertDescription className="text-destructive">
                     <div>
                       Only students with{" "}
-                      <span className="font-semibold">usls.edu.ph email</span>{" "}
+                      <span className="font-semibold">usls.edu.ph</span> email
                       is allowed to access this platform.
                     </div>
                   </AlertDescription>
@@ -79,30 +78,20 @@ export default async function Login({ searchParams }: Props) {
                   <AlertDescription className="text-foreground">
                     <div>
                       Sign in with your{" "}
-                      <span className="font-semibold">.edu email</span> to
-                      access your school&apos;s private forum.
+                      <span className="font-semibold">usls.edu.ph</span> email{" "}
+                      to access the private forum.
                     </div>
                   </AlertDescription>
                 </Alert>
               )}
 
-              <div className="space-y-4">
-                <div className="flex items-start gap-2">
-                  <SchoolIcon className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-muted-foreground">
-                    You&apos;ll be assigned to a private forum based on your
-                    educational institution&apos;s email domain.
-                  </p>
-                </div>
-
-                <div className="flex items-start gap-2">
-                  <ShieldIcon className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-muted-foreground">
-                    Your email is only used for verification. We don&apos;t
-                    store your personal data beyond what&apos;s needed for
-                    authentication.
-                  </p>
-                </div>
+              <div className="flex items-start gap-2">
+                <ShieldIcon className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-muted-foreground">
+                  Your email is only used for verification. We don&apos;t store
+                  your personal data beyond what&apos;s needed for
+                  authentication.
+                </p>
               </div>
 
               <div className="space-y-3">
