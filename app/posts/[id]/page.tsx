@@ -24,13 +24,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = truncateContent(post.content, 160);
 
   return {
-    metadataBase: new URL(`https://umedu.omsimos.com/posts/${id}`),
-    title: `Umedu | ${post.title}`,
+    metadataBase: new URL(`https://ccs.omsimos.com/posts/${id}`),
+    title: `Umedu x CCS | ${post.title}`,
     description: truncateContent(post.content),
     openGraph: {
       type: "website",
-      siteName: "Umedu",
-      url: `https://umedu.omsimos.com/posts/${id}`,
+      siteName: "Umedu x CCS",
+      url: `https://ccs.omsimos.com/posts/${id}`,
       title,
       description,
     },
@@ -52,10 +52,7 @@ export default async function Page({ params }: Props) {
   return (
     <div className="min-h-screen flex flex-col justify-between">
       <div className="mb-8">
-        <ForumNavbar
-          forumId={post.forumId}
-          renderButtons={() => <ShareButton title={post.title} />}
-        />
+        <ForumNavbar renderButtons={() => <ShareButton title={post.title} />} />
         <div className="space-y-2">
           <h2 className="text-lg mt-24 font-semibold">{post.title}</h2>
 

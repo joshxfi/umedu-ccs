@@ -15,7 +15,7 @@ import { ForumNavbar } from "./components/forum-navbar";
 import { LogoutButton } from "./components/logout-button";
 
 export const metadata: Metadata = {
-  title: "Umedu — Private Forum",
+  title: "Umedu x CCS — Private Forum",
   robots: {
     index: false,
   },
@@ -34,7 +34,7 @@ export default async function ForumLayout({
 
   return (
     <section className="flex flex-col items-center mt-24">
-      <ForumNavbar forumId={session.forumId} />
+      <ForumNavbar />
 
       {children}
 

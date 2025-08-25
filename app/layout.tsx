@@ -17,13 +17,13 @@ const geistMono = Geist_Mono({
 });
 
 const title =
-  "Umedu – Private Student Forums | Secure & Anonymous Social Platform";
+  "Umedu – Private Student Forums | USLS College of Computing Studies Edition";
 
 const description =
   "Umedu is a secure and anonymous social platform that automatically creates private forums for students using their .edu email. Join your school's exclusive space—no personal info stored.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://umedu.omsimos.com"),
+  metadataBase: new URL("https://ccs.omsimos.com"),
   alternates: {
     canonical: "/",
   },
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
   description,
   openGraph: {
     type: "website",
-    siteName: "Umedu",
-    url: "https://umedu.omsimos.com",
+    siteName: "Umedu x CCS",
+    url: "https://ccs.omsimos.com",
     title,
     description,
   },

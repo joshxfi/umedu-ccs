@@ -24,7 +24,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Umedu — Login",
+  title: "Umedu x CCS — Login",
 };
 
 type Props = {
