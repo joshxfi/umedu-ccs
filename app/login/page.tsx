@@ -64,9 +64,9 @@ export default async function Login({ searchParams }: Props) {
                   <AlertTriangleIcon className="h-4 w-4 text-destructive" />
                   <AlertDescription className="text-destructive">
                     <div>
-                      Invalid email domain. Please use a valid{" "}
-                      <span className="font-semibold">.edu email</span> to
-                      access this platform.
+                      Only students with{" "}
+                      <span className="font-semibold">usls.edu.ph email</span>{" "}
+                      is allowed to access this platform.
                     </div>
                   </AlertDescription>
                 </Alert>

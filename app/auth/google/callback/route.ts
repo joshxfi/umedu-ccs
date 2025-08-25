@@ -64,11 +64,11 @@ export async function GET(request: Request): Promise<Response> {
 
   const email = claims.data.email; // for forum assignment only, this is not stored.
 
-  const isEduEmail =
-    email.split("@")[1].includes(".edu") ||
+  const iValidEmail =
+    email.split("@")[1].includes("usls.edu.ph") || // only allow `usls` emails
     process.env.WHITELIST?.includes(email); // whitelisted emails are for testing purposes
 
-  if (!isEduEmail) {
+  if (!iValidEmail) {
     console.log("Invalid email domain");
     return new Response(null, {
       status: 302,

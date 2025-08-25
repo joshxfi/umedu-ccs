@@ -69,7 +69,7 @@ async function main() {
     (f) => ({
       forum: {
         count: 1,
-        columns: { id: f.valuesFromArray({ values: ["gmail.com"] }) },
+        columns: { id: f.valuesFromArray({ values: ["usls.edu.ph"] }) },
       },
       tag: {
         count: AVAILABLE_TAGS.length,
