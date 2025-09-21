@@ -5,25 +5,14 @@ import { getSession } from "@/lib/auth";
 import { DashboardView } from "./components/dashboard-view";
 
 type PageProps = {
-  searchParams?: Record<string, string | string[] | undefined>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
-
-function getFirstParamValue(
-  value: string | string[] | undefined,
-): string | undefined {
-  if (Array.isArray(value)) {
-    return value[0];
-  }
-
-  return value;
-}
 
 export default async function DashboardPage({ searchParams }: PageProps) {
   const { session } = await getSession();
-  const params = searchParams ?? {};
-  const keyParam = getFirstParamValue(params.key);
+  const { key } = await searchParams;
 
-  if (!session || !keyParam || keyParam !== process.env.API_ADMIN_SECRET) {
+  if (!session || key !== process.env.API_ADMIN_SECRET) {
     redirect("/");
   }
 

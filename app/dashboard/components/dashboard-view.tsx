@@ -1,12 +1,10 @@
 "use client";
 
 import React, { useMemo } from "react";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { MessageCircleDashedIcon } from "lucide-react";
 
-import { PostCard } from "@/app/forum/components/post-card";
 import { PostCardSkeleton } from "@/app/forum/components/post-card-skeleton";
 import {
   Pagination,
@@ -19,6 +17,8 @@ import {
 } from "@/components/ui/pagination";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import type { DashboardPostsResponse } from "@/types/dashboard";
+import { MessageCard } from "./message-card";
+import { saveImage } from "@/lib/utils";
 
 const DEFAULT_LIMIT = 10;
 const MAX_LIMIT = 100;
@@ -119,13 +119,7 @@ export function DashboardView() {
     return (await res.json()) as DashboardPostsResponse;
   };
 
-  const {
-    data,
-    error,
-    isError,
-    isFetching,
-    isLoading,
-  } = useQuery({
+  const { data, error, isError, isFetching, isLoading } = useQuery({
     queryKey,
     queryFn: fetchDashboardPosts,
     placeholderData: keepPreviousData,
@@ -211,16 +205,15 @@ export function DashboardView() {
           </AlertDescription>
         </Alert>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid md:grid-cols-2">
           {posts.map((post) => (
-            <Link
+            <button
               key={post.id}
-              href={`/posts/${post.id}`}
-              className="block"
-              prefetch={false}
+              onClick={() => saveImage(`umedu-${post.id}`)}
+              className="text-left w-full"
             >
-              <PostCard post={post} />
-            </Link>
+              <MessageCard key={post.id} post={post} />
+            </button>
           ))}
         </div>
       )}
@@ -232,11 +225,19 @@ export function DashboardView() {
               <PaginationPrevious
                 href={
                   hasPreviousPage
-                    ? buildHref({ key: adminKey, page: effectivePage - 1, limit: currentLimit })
+                    ? buildHref({
+                        key: adminKey,
+                        page: effectivePage - 1,
+                        limit: currentLimit,
+                      })
                     : undefined
                 }
                 aria-disabled={!hasPreviousPage}
-                className={!hasPreviousPage ? "pointer-events-none opacity-50" : undefined}
+                className={
+                  !hasPreviousPage
+                    ? "pointer-events-none opacity-50"
+                    : undefined
+                }
                 onClick={(event) => {
                   if (!hasPreviousPage) return;
                   event.preventDefault();
@@ -259,9 +260,15 @@ export function DashboardView() {
                   )}
                   <PaginationItem>
                     <PaginationLink
-                      href={buildHref({ key: adminKey, page: pageNumber, limit: currentLimit })}
+                      href={buildHref({
+                        key: adminKey,
+                        page: pageNumber,
+                        limit: currentLimit,
+                      })}
                       isActive={pageNumber === effectivePage}
-                      aria-current={pageNumber === effectivePage ? "page" : undefined}
+                      aria-current={
+                        pageNumber === effectivePage ? "page" : undefined
+                      }
                       onClick={(event) => {
                         event.preventDefault();
                         if (pageNumber === effectivePage) return;
@@ -279,11 +286,17 @@ export function DashboardView() {
               <PaginationNext
                 href={
                   hasNextPage
-                    ? buildHref({ key: adminKey, page: effectivePage + 1, limit: currentLimit })
+                    ? buildHref({
+                        key: adminKey,
+                        page: effectivePage + 1,
+                        limit: currentLimit,
+                      })
                     : undefined
                 }
                 aria-disabled={!hasNextPage}
-                className={!hasNextPage ? "pointer-events-none opacity-50" : undefined}
+                className={
+                  !hasNextPage ? "pointer-events-none opacity-50" : undefined
+                }
                 onClick={(event) => {
                   if (!hasNextPage) return;
                   event.preventDefault();
