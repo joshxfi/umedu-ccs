@@ -8,7 +8,7 @@ import { HighlightText } from "@/components/highlight-text";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col justify-between">
+    <div className="min-h-screen flex flex-col container justify-between max-w-xl mx-auto">
       <section>
         <Navbar />
         <div className="flex items-center flex-col">

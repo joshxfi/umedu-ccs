@@ -50,9 +50,12 @@ export default async function Page({ params }: Props) {
   const post = await getPost(id);
 
   return (
-    <div className="min-h-screen flex flex-col justify-between">
+    <div className="min-h-screen max-w-xl container mx-auto flex flex-col justify-between">
       <div className="mb-8">
-        <ForumNavbar renderButtons={() => <ShareButton title={post.title} />} />
+        <ForumNavbar
+          className="max-w-xl"
+          renderButtons={() => <ShareButton title={post.title} />}
+        />
         <div className="space-y-2">
           <h2 className="text-lg mt-24 font-semibold">{post.title}</h2>
 

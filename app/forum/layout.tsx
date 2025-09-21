@@ -33,11 +33,9 @@ export default async function ForumLayout({
   }
 
   return (
-    <section className="flex flex-col items-center mt-24">
-      <ForumNavbar />
-
+    <section className="flex max-w-xl mx-auto flex-col container items-center mt-24">
+      <ForumNavbar className="max-w-xl" />
       {children}
-
       <section className="rounded-t-4xl bg-secondary w-full p-4 max-w-xl mx-auto flex items-center justify-evenly fixed bottom-0 right-0 left-0">
         <Link href="/">
           <HomeIcon className="size-5" />

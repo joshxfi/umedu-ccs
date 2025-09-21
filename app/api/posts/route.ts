@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import * as z from "zod";
 import type { NextRequest } from "next/server";
 import { desc, lt, and, or, eq } from "drizzle-orm";
 

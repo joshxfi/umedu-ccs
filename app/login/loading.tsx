@@ -11,7 +11,7 @@ import { Footer } from "@/components/footer";
 
 export default function LoginLoading() {
   return (
-    <div className="min-h-screen flex flex-col justify-between">
+    <div className="min-h-screen max-w-xl mx-auto container flex flex-col justify-between">
       <section>
         <Navbar />
         <div className="mx-auto max-w-md">
