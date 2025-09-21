@@ -26,33 +26,88 @@ export const getBaseUrl = () => {
   return "http://localhost:3000";
 };
 
-export const saveImage = (id: string) => {
-  const target = document.querySelector(`#${id}`);
+type SaveImageOptions = {
+  notify?: boolean;
+  fileName?: string;
+};
+
+const DEFAULT_BACKGROUND_COLOR = "#09090B";
+
+export const saveImage = async (
+  id: string,
+  { notify = true, fileName }: SaveImageOptions = {},
+): Promise<void> => {
+  const target = document.querySelector(`#${id}`) as HTMLElement | null;
 
   if (!target) {
-    toast.error("An error occured");
+    if (notify) {
+      toast.error("Unable to find the element to capture");
+    }
+    throw new Error(`Element with id '${id}' not found`);
+  }
+
+  const download = domToPng(target, {
+    quality: 1,
+    scale: 4,
+    backgroundColor: DEFAULT_BACKGROUND_COLOR,
+    style: {
+      scale: "0.9",
+      display: "grid",
+      placeItems: "center",
+    },
+  })
+    .then((dataUrl) => {
+      const link = document.createElement("a");
+      link.download = fileName ?? `umedu-ccs-${nanoid(5)}.png`;
+      link.href = dataUrl;
+      link.click();
+    })
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    });
+
+  if (!notify) {
+    await download;
+    return;
+  }
+
+  toast.promise(download, {
+    loading: "Preparing image...",
+    success: "Download ready",
+    error: "Failed to download image",
+  });
+};
+
+const wait = (ms: number) =>
+  new Promise<void>((resolve) => {
+    setTimeout(resolve, ms);
+  });
+
+export const saveImagesBulk = async (ids: string[]) => {
+  const uniqueIds = Array.from(new Set(ids)).filter(Boolean);
+
+  if (uniqueIds.length === 0) {
+    toast.error("No images available to download");
     return;
   }
 
   toast.promise(
-    domToPng(target, {
-      quality: 1,
-      scale: 4,
-      backgroundColor: "#09090B",
-    })
-      .then((dataUrl) => {
-        const link = document.createElement("a");
-        link.download = `umedu-ccs-${nanoid(5)}.png`;
-        link.href = dataUrl;
-        link.click();
-      })
-      .catch((err) => {
-        console.log(err);
-      }),
+    (async () => {
+      for (const [index, elementId] of uniqueIds.entries()) {
+        await saveImage(elementId, {
+          notify: false,
+          fileName: `umedu-ccs-${elementId}-${index + 1}.png`,
+        });
+
+        // Allow the browser a brief moment between downloads so they are not clobbered.
+        await wait(150);
+      }
+    })(),
     {
-      loading: "Saving...",
-      success: "Download ready",
-      error: "An error occured!",
+      loading: "Preparing downloads...",
+      success: `Downloading ${uniqueIds.length} images`,
+      error: "Failed to download all images",
     },
   );
 };

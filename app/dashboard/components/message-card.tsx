@@ -13,7 +13,7 @@ type Props = {
 
 export function MessageCard({ post }: Props) {
   return (
-    <div id={`umedu-${post.id}`} className="p-4">
+    <div id={`umedu-${post.id}`}>
       <Card className="w-full justify-between overflow-hidden">
         <CardContent>
           <CardTitle className="mb-2 leading-tight">{post.title}</CardTitle>

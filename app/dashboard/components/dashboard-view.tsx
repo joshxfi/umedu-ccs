@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { MessageCircleDashedIcon } from "lucide-react";
@@ -16,9 +16,10 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import type { DashboardPostsResponse } from "@/types/dashboard";
 import { MessageCard } from "./message-card";
-import { saveImage } from "@/lib/utils";
+import { saveImage, saveImagesBulk } from "@/lib/utils";
 
 const DEFAULT_LIMIT = 10;
 const MAX_LIMIT = 100;
@@ -127,6 +128,7 @@ export function DashboardView() {
   });
 
   const isInitialLoading = isLoading && !data;
+  const [isDownloadingAll, setIsDownloadingAll] = useState(false);
 
   const total = data?.total ?? 0;
   const effectiveLimit = data?.limit ?? currentLimit;
@@ -156,6 +158,19 @@ export function DashboardView() {
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
+  const handleDownloadAll = async () => {
+    if (isInitialLoading || !posts.length || isDownloadingAll) {
+      return;
+    }
+
+    setIsDownloadingAll(true);
+    try {
+      await saveImagesBulk(posts.map((post) => `umedu-${post.id}`));
+    } finally {
+      setIsDownloadingAll(false);
+    }
+  };
+
   if (!adminKey) {
     return (
       <Alert variant="destructive" className="max-w-2xl">
@@ -180,14 +195,30 @@ export function DashboardView() {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between text-sm text-muted-foreground">
-        <span>
-          Showing {total === 0 ? 0 : firstItemIndex}–{lastItemIndex} of {total}
-        </span>
-        <span>
-          Page {effectivePage} of {pageCount}
-          {isFetching ? " · Updating…" : ""}
-        </span>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="text-sm text-muted-foreground space-y-1 sm:space-y-0">
+          <div>
+            Showing {total === 0 ? 0 : firstItemIndex}–{lastItemIndex} of{" "}
+            {total}
+          </div>
+          <div>
+            {/* Page {effectivePage} of {pageCount} */}
+            {isFetching ? " · Updating…" : ""}
+          </div>
+        </div>
+
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={handleDownloadAll}
+          disabled={
+            isInitialLoading || !posts.length || isDownloadingAll || isFetching
+          }
+          className="self-start sm:self-auto"
+        >
+          {isDownloadingAll ? "Downloading..." : "Download All"}
+        </Button>
       </div>
 
       {isInitialLoading ? (
@@ -205,10 +236,11 @@ export function DashboardView() {
           </AlertDescription>
         </Alert>
       ) : (
-        <div className="grid md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
           {posts.map((post) => (
             <button
               key={post.id}
+              type="button"
               onClick={() => saveImage(`umedu-${post.id}`)}
               className="text-left w-full"
             >
