@@ -40,7 +40,7 @@ function TextField({
           </p>
         )}
 
-        <CharacterCounter current={field.state.value.length} max={300} />
+        <CharacterCounter current={field.state.value.length} max={150} />
       </div>
     </div>
   );
@@ -73,7 +73,7 @@ function TextareaField({
           </p>
         )}
 
-        <CharacterCounter current={field.state.value.length} max={20000} />
+        <CharacterCounter current={field.state.value.length} max={500} />
       </div>
     </div>
   );

@@ -17,11 +17,11 @@ const messageSchema = z.object({
   title: z
     .string()
     .min(3, { error: "Title must be at least 3 characters" })
-    .max(300, { error: "Title must not exceed 300 characters" }),
+    .max(150, { error: "Title must not exceed 150 characters" }),
   content: z
     .string()
     .min(10, { error: "Message must be at least 10 characters" })
-    .max(20000, { error: "Message must not exceed 20,000 characters" }),
+    .max(500, { error: "Message must not exceed 500 characters" }),
   tags: z.array(z.string()).max(3, { error: "You can select up to 3 tags" }),
 });
 

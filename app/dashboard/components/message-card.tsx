@@ -34,7 +34,7 @@ export function MessageCard({ post }: Props) {
       >
         <Card className="w-full justify-between overflow-hidden aspect-square">
           <CardContent>
-            <CardTitle className="mb-2 min-w-0 break-words text-xl leading-tight">
+            <CardTitle className={cn("mb-2 min-w-0 break-words leading-tight", fontSizeClass)}>
               {post.title}
             </CardTitle>
 
