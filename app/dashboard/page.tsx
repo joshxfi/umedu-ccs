@@ -21,7 +21,7 @@ export default async function DashboardPage({ searchParams }: PageProps) {
       <ForumNavbar />
 
       <main className="container mx-auto max-w-5xl pt-28 space-y-8">
-        <div className="space-y-2">
+        <div className="space-y-2 px-4">
           <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
           <p className="text-muted-foreground">
             Review posts from the forum with admin-only access.

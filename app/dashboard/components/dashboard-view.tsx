@@ -196,7 +196,7 @@ export function DashboardView() {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex px-4 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="text-sm text-muted-foreground space-y-1 sm:space-y-0">
           <div>
             Showing {total === 0 ? 0 : firstItemIndex}–{lastItemIndex} of{" "}
@@ -242,7 +242,7 @@ export function DashboardView() {
           </AlertDescription>
         </Alert>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid md:grid-cols-2">
           {posts.map((post) => (
             <MessageCard key={post.id} post={post} />
           ))}

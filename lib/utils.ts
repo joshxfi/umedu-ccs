@@ -50,11 +50,6 @@ export const saveImage = async (
     quality: 1,
     scale: 4,
     backgroundColor: DEFAULT_BACKGROUND_COLOR,
-    style: {
-      scale: "0.9",
-      display: "grid",
-      placeItems: "center",
-    },
   })
     .then((dataUrl) => {
       const link = document.createElement("a");
