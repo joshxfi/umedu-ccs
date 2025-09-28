@@ -97,7 +97,7 @@ export const saveImagesBulk = async (ids: string[]) => {
       for (const [index, elementId] of uniqueIds.entries()) {
         await saveImage(elementId, {
           notify: false,
-          fileName: `umedu-ccs-${elementId}-${index + 1}.png`,
+          fileName: `${elementId}-${index + 1}.png`,
         });
 
         // Allow the browser a brief moment between downloads so they are not clobbered.

@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { MessageCircleDashedIcon } from "lucide-react";
+import { ImagesIcon, MessageCircleDashedIcon } from "lucide-react";
 
 import { PostCardSkeleton } from "@/app/forum/components/post-card-skeleton";
 import {
@@ -19,7 +19,8 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import type { DashboardPostsResponse } from "@/types/dashboard";
 import { MessageCard } from "./message-card";
-import { saveImage, saveImagesBulk } from "@/lib/utils";
+import { saveImagesBulk } from "@/lib/utils";
+import { Loader2Icon } from "lucide-react";
 
 const DEFAULT_LIMIT = 10;
 const MAX_LIMIT = 100;
@@ -217,6 +218,11 @@ export function DashboardView() {
           }
           className="self-start sm:self-auto"
         >
+          {isDownloadingAll ? (
+            <Loader2Icon className="animate-spin" />
+          ) : (
+            <ImagesIcon />
+          )}
           {isDownloadingAll ? "Downloading..." : "Download All"}
         </Button>
       </div>
@@ -238,14 +244,7 @@ export function DashboardView() {
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
           {posts.map((post) => (
-            <button
-              key={post.id}
-              type="button"
-              onClick={() => saveImage(`umedu-${post.id}`)}
-              className="text-left w-full"
-            >
-              <MessageCard key={post.id} post={post} />
-            </button>
+            <MessageCard key={post.id} post={post} />
           ))}
         </div>
       )}
