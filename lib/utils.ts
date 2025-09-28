@@ -4,6 +4,7 @@ import { clsx, type ClassValue } from "clsx";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import { nanoid } from "nanoid";
+import { aesDecrypt } from "./aes";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -106,3 +107,11 @@ export const saveImagesBulk = async (ids: string[]) => {
     },
   );
 };
+
+export async function safeDecrypt(encryptedText: string) {
+  try {
+    return await aesDecrypt(encryptedText);
+  } catch {
+    return encryptedText;
+  }
+}
