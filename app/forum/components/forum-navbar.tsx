@@ -18,7 +18,7 @@ export function ForumNavbar({ renderButtons, className }: Props) {
       )}
     >
       <div className="flex items-center gap-2">
-        <Link href="/" className="font-bold tracking-tighter">
+        <Link href="/forum" className="font-bold tracking-tighter">
           <span>
             um<i>edu</i>{" "}
           </span>
