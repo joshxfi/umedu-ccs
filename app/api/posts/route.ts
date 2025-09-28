@@ -46,7 +46,9 @@ export async function GET(request: NextRequest) {
               },
             },
           },
-          where: and(cursorCondition, eq(postTable.forumId, session?.forumId)),
+          where: cursorCondition
+            ? and(cursorCondition, eq(postTable.forumId, session?.forumId))
+            : eq(postTable.forumId, session?.forumId),
           orderBy: [desc(postTable.createdAt), desc(postTable.id)],
           limit: 10,
         });
