@@ -19,17 +19,8 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import type { DashboardPostsResponse } from "@/types/dashboard";
 import { MessageCard } from "./message-card";
-import { saveImagesBulk } from "@/lib/utils";
+import { clampLimit, saveImagesBulk } from "@/lib/utils";
 import { Loader2Icon } from "lucide-react";
-
-const DEFAULT_LIMIT = 10;
-const MAX_LIMIT = 100;
-
-function clampLimit(limit: number | undefined) {
-  if (!limit) return DEFAULT_LIMIT;
-  if (Number.isNaN(limit)) return DEFAULT_LIMIT;
-  return Math.min(Math.max(limit, 1), MAX_LIMIT);
-}
 
 function getPaginationPages(current: number, totalPages: number) {
   const siblings = 1;
@@ -87,7 +78,7 @@ export function DashboardView() {
 
   const currentLimit = useMemo(() => {
     const rawLimit = searchParams.get("limit");
-    if (!rawLimit) return DEFAULT_LIMIT;
+    if (!rawLimit) return 10;
 
     const parsed = Number.parseInt(rawLimit, 10);
     return clampLimit(parsed);

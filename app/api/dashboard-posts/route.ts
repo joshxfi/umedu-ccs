@@ -1,7 +1,8 @@
 import type { NextRequest } from "next/server";
 
 import { getSession } from "@/lib/auth";
-import { clampLimit, getDashboardPosts } from "@/lib/dashboard-posts";
+import { clampLimit } from "@/lib/utils";
+import { getDashboardPosts } from "@/actions/dashboard";
 
 export async function GET(req: NextRequest) {
   try {
@@ -16,13 +17,13 @@ export async function GET(req: NextRequest) {
     const limitParam = searchParams.get("limit");
     const offsetParam = searchParams.get("offset");
 
-    const parsedLimit = limitParam ? Number.parseInt(limitParam, 10) : undefined;
+    const parsedLimit = limitParam
+      ? Number.parseInt(limitParam, 10)
+      : undefined;
     const limit = clampLimit(parsedLimit);
 
     const parsedOffset = offsetParam ? Number.parseInt(offsetParam, 10) : 0;
-    const offset = Number.isNaN(parsedOffset)
-      ? 0
-      : Math.max(parsedOffset, 0);
+    const offset = Number.isNaN(parsedOffset) ? 0 : Math.max(parsedOffset, 0);
 
     const data = await getDashboardPosts({
       forumId: session.forumId,

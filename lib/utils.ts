@@ -115,3 +115,18 @@ export async function safeDecrypt(encryptedText: string) {
     return encryptedText;
   }
 }
+
+const DEFAULT_LIMIT = 10;
+const MAX_LIMIT = 100;
+
+export function clampLimit(limit: number | undefined) {
+  if (!limit) {
+    return DEFAULT_LIMIT;
+  }
+
+  if (Number.isNaN(limit)) {
+    return DEFAULT_LIMIT;
+  }
+
+  return Math.min(Math.max(limit, 1), MAX_LIMIT);
+}
