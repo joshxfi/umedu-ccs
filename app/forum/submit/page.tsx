@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { TagsSelection } from "./components/tags-selection";
 import { getTagsQuery } from "@/lib/queries";
+import { CCSLogo } from "@/components/ccs-logo";
 
 const messageSchema = z.object({
   title: z
@@ -77,6 +78,8 @@ export default function SubmitPage() {
         form.handleSubmit();
       }}
     >
+      <CCSLogo className="size-36 mx-auto mb-4" />
+
       <form.AppField
         name="title"
         children={(field) => (

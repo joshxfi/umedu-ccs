@@ -5,13 +5,17 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { HighlightText } from "@/components/highlight-text";
+import { CCSLogo } from "@/components/ccs-logo";
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col container justify-between max-w-xl mx-auto">
       <section>
         <Navbar />
+
         <div className="flex items-center flex-col">
+          <CCSLogo className="size-36" />
+
           <h1 className="font-extrabold tracking-tighter text-8xl">
             um<i>edu</i>
           </h1>
