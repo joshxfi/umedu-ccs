@@ -1,12 +1,13 @@
 "use server";
 
 import { desc, eq, count } from "drizzle-orm";
-import { unstable_cache } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
 
 import { db } from "@/db";
 import { postTable } from "@/db/schema";
 import type { DashboardPostsResponse } from "@/types/dashboard";
 import { safeDecrypt } from "@/lib/utils";
+import { getSession } from "@/lib/auth";
 
 const getTotalCached = unstable_cache(
   async (forumId: string) => {
@@ -67,4 +68,20 @@ export async function getDashboardPosts({
     limit,
     offset,
   };
+}
+
+type DeletePostActionParams = {
+  id: string;
+  key?: string | null;
+};
+
+export async function deletePostAction({ id, key }: DeletePostActionParams) {
+  const { session } = await getSession();
+
+  if (!session || !key || key !== process.env.API_ADMIN_SECRET) {
+    throw new Error("Unauthorized");
+  }
+
+  await db.delete(postTable).where(eq(postTable.id, id));
+  revalidateTag(`posts:${session.forumId}:feed`);
 }
