@@ -24,6 +24,8 @@ type Props = {
 export function PostCardDialog({ post, isOpen, setIsOpen }: Props) {
   const searchParams = useSearchParams();
   const key = searchParams.get("key");
+  const page = searchParams.get("page");
+  const limit = searchParams.get("limit");
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -31,7 +33,12 @@ export function PostCardDialog({ post, isOpen, setIsOpen }: Props) {
     onSuccess: () => {
       toast.success("Post deleted successfully");
     },
-    onSettled: () => queryClient.invalidateQueries({ queryKey: ["feed"] }),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["feed"] });
+      queryClient.invalidateQueries({
+        queryKey: ["dashboard-posts", { key, page, limit }],
+      });
+    },
   });
 
   return (

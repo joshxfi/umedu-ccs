@@ -88,7 +88,11 @@ export function DashboardView() {
 
   const queryKey = [
     "dashboard-posts",
-    { key: adminKey ?? "", page: currentPage, limit: currentLimit },
+    {
+      key: adminKey ?? "",
+      page: currentPage.toString(),
+      limit: currentLimit.toString(),
+    },
   ] as const;
 
   const fetchDashboardPosts = async (): Promise<DashboardPostsResponse> => {
