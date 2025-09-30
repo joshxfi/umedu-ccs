@@ -133,6 +133,8 @@ export function clampLimit(limit: number | undefined) {
 const DELETED_POSTS_KEY = "deletedPosts";
 
 export function readDeletedIdSet(): Set<string> {
+  if (typeof window === "undefined") return new Set();
+
   try {
     const raw = sessionStorage.getItem(DELETED_POSTS_KEY);
     if (!raw) return new Set();
