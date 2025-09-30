@@ -1,8 +1,14 @@
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-export function Footer() {
+export function Footer({ className }: { className?: string }) {
   return (
-    <footer className="pb-8 flex flex-col items-center text-muted-foreground text-sm">
+    <footer
+      className={cn(
+        "pb-8 flex flex-col items-center text-muted-foreground text-sm",
+        className,
+      )}
+    >
       <div>
         <Link
           href="https://umedu.omsimos.com"
@@ -11,8 +17,8 @@ export function Footer() {
           um<i>edu</i>
         </Link>{" "}
         by{" "}
-        <Link href="https://www.instagram.com/josh.xfi/" target="_blank">
-          @josh.xfi
+        <Link href="https://www.instagram.com/josh.xfi/" className="underline" target="_blank">
+          joshxfi
         </Link>
       </div>
     </footer>

@@ -9,6 +9,7 @@ import { useState, useMemo } from "react";
 import { PostCardDialog } from "./post-card-dialog";
 import { DashboardPost } from "@/types/dashboard";
 import { Logo } from "@/components/logo";
+import { CCSLogo } from "@/components/ccs-logo";
 
 type Props = {
   post: DashboardPost;
@@ -30,11 +31,17 @@ export function MessageCard({ post }: Props) {
         type="button"
         id={`umedu-${post.id}`}
         onClick={() => setIsOpen(true)}
-        className="text-left w-full p-4"
+        className="text-left w-full p-4 relative"
       >
+        <CCSLogo className="absolute size-24 bottom-24 right-5 opacity-50" />
         <Card className="w-full justify-between overflow-hidden aspect-square">
           <CardContent>
-            <CardTitle className={cn("mb-2 min-w-0 break-words leading-tight", fontSizeClass)}>
+            <CardTitle
+              className={cn(
+                "mb-2 min-w-0 break-words leading-tight",
+                fontSizeClass,
+              )}
+            >
               {post.title}
             </CardTitle>
 

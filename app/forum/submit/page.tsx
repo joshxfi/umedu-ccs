@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { TagsSelection } from "./components/tags-selection";
 import { getTagsQuery } from "@/lib/queries";
 import { CCSLogo } from "@/components/ccs-logo";
+import { Footer } from "@/components/footer";
 
 const messageSchema = z.object({
   title: z
@@ -162,6 +163,8 @@ export default function SubmitPage() {
           />
         </form.AppForm>
       </div>
+
+      <Footer className="my-16" />
     </form>
   );
 }
