@@ -24,20 +24,28 @@ type Props = {
 export function PostCardDialog({ post, isOpen, setIsOpen }: Props) {
   const searchParams = useSearchParams();
   const key = searchParams.get("key");
-  const page = searchParams.get("page");
-  const limit = searchParams.get("limit");
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: deletePostAction,
     onSuccess: () => {
       toast.success("Post deleted successfully");
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["feed"] });
+
+      const expiresAt = Date.now() + 24 * 60 * 60 * 1000; // 1 day
+      const deletedPosts = JSON.parse(
+        sessionStorage.getItem("deletedPosts") || "[]",
+      );
+
+      deletedPosts.push({ id: post.id, expiresAt });
+      sessionStorage.setItem("deletedPosts", JSON.stringify(deletedPosts));
+
       queryClient.invalidateQueries({
-        queryKey: ["dashboard-posts", { key, page, limit }],
+        queryKey: ["dashboard-posts"],
+        exact: false,
       });
+    },
+    onSettled: async () => {
+      queryClient.invalidateQueries({ queryKey: ["feed"] });
     },
   });
 

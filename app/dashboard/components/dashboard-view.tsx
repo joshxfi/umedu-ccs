@@ -19,7 +19,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import type { DashboardPostsResponse } from "@/types/dashboard";
 import { MessageCard } from "./message-card";
-import { clampLimit, saveImagesBulk } from "@/lib/utils";
+import { clampLimit, readDeletedIdSet, saveImagesBulk } from "@/lib/utils";
 import { Loader2Icon } from "lucide-react";
 
 function getPaginationPages(current: number, totalPages: number) {
@@ -129,7 +129,12 @@ export function DashboardView() {
   const total = data?.total ?? 0;
   const effectiveLimit = data?.limit ?? currentLimit;
   const usedOffset = data?.offset ?? offset;
-  const posts = data?.posts ?? [];
+
+  const deletedIds = useMemo(() => readDeletedIdSet(), []);
+  const posts = useMemo(
+    () => data?.posts.filter((p) => !deletedIds.has(String(p.id))),
+    [data?.posts, deletedIds],
+  );
 
   const pageCount = data ? Math.max(Math.ceil(total / effectiveLimit), 1) : 1;
   const effectivePage = data
@@ -155,9 +160,7 @@ export function DashboardView() {
   };
 
   const handleDownloadAll = async () => {
-    if (isInitialLoading || !posts.length || isDownloadingAll) {
-      return;
-    }
+    if (isInitialLoading || !posts?.length || isDownloadingAll) return;
 
     setIsDownloadingAll(true);
     try {
@@ -209,7 +212,7 @@ export function DashboardView() {
           size="sm"
           onClick={handleDownloadAll}
           disabled={
-            isInitialLoading || !posts.length || isDownloadingAll || isFetching
+            isInitialLoading || !posts?.length || isDownloadingAll || isFetching
           }
           className="self-start sm:self-auto"
         >
@@ -228,7 +231,7 @@ export function DashboardView() {
             <PostCardSkeleton key={index} />
           ))}
         </div>
-      ) : posts.length === 0 ? (
+      ) : posts?.length === 0 ? (
         <Alert className="max-w-2xl">
           <MessageCircleDashedIcon className="size-5" />
           <AlertTitle>No posts yet</AlertTitle>
@@ -238,7 +241,7 @@ export function DashboardView() {
         </Alert>
       ) : (
         <div className="grid md:grid-cols-2">
-          {posts.map((post) => (
+          {posts?.map((post) => (
             <MessageCard key={post.id} post={post} />
           ))}
         </div>

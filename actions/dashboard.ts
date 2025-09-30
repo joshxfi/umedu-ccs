@@ -32,7 +32,7 @@ const getPageCached = unstable_cache(
     });
   },
   ["dashboard:page"],
-  { revalidate: 30, tags: ["dashboard:posts"] },
+  { revalidate: 30 },
 );
 
 export async function getDashboardPosts({
@@ -84,5 +84,4 @@ export async function deletePostAction({ id, key }: DeletePostActionParams) {
 
   await db.delete(postTable).where(eq(postTable.id, id));
   revalidateTag(`posts:${session.forumId}:feed`);
-  revalidateTag("dashboard:posts");
 }

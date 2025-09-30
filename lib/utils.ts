@@ -130,3 +130,27 @@ export function clampLimit(limit: number | undefined) {
 
   return Math.min(Math.max(limit, 1), MAX_LIMIT);
 }
+const DELETED_POSTS_KEY = "deletedPosts";
+
+export function readDeletedIdSet(): Set<string> {
+  try {
+    const raw = sessionStorage.getItem(DELETED_POSTS_KEY);
+    if (!raw) return new Set();
+
+    const now = Date.now();
+    const parsed = JSON.parse(raw) as Array<{
+      id: string | number;
+      expiresAt: number;
+    }>;
+    const fresh = parsed.filter((x) => Number(x.expiresAt) > now);
+
+    if (fresh.length !== parsed.length) {
+      sessionStorage.setItem(DELETED_POSTS_KEY, JSON.stringify(fresh));
+    }
+
+    return new Set(fresh.map((x) => String(x.id)));
+  } catch {
+    sessionStorage.removeItem(DELETED_POSTS_KEY);
+    return new Set();
+  }
+}
