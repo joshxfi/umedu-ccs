@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col justify-between">
+    <div className="min-h-screen container max-w-xl flex flex-col justify-between">
       <section>
         <Navbar />
 
@@ -108,7 +108,7 @@ export default function Home() {
         </div>
       </section>
 
-      <Footer />
+      <Footer className="mt-12" />
     </div>
   );
 }
