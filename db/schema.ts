@@ -45,7 +45,7 @@ export const tagTable = sqliteTable("tag", {
 });
 
 export const tagsRelations = relations(tagTable, ({ many }) => ({
- tagsToPosts: many(tagsToPostsTable),
+  tagsToPosts: many(tagsToPostsTable),
 }));
 
 export const tagsToPostsTable = sqliteTable(
@@ -53,7 +53,7 @@ export const tagsToPostsTable = sqliteTable(
   {
     postId: text("post_id")
       .notNull()
-      .references(() => postTable.id),
+      .references(() => postTable.id, { onDelete: "cascade" }),
     tagId: text("tag_id")
       .notNull()
       .references(() => tagTable.id),
