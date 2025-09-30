@@ -1,5 +1,6 @@
 "use client";
 
+import { ThemeProvider } from "next-themes";
 import { ProgressProvider } from "@bprogress/next/app";
 import { getQueryClient } from "@/lib/get-query-client";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -10,14 +11,21 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ProgressProvider
-        height="2px"
-        color="#a16207"
-        options={{ showSpinner: false }}
-        shallowRouting
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem
+        disableTransitionOnChange
       >
-        {children}
-      </ProgressProvider>
+        <ProgressProvider
+          height="2px"
+          color="#90A1B9"
+          options={{ showSpinner: false }}
+          shallowRouting
+        >
+          {children}
+        </ProgressProvider>
+      </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
